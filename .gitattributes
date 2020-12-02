@@ -1,0 +1,10 @@
+# Keep package clean:
+/.idea     export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/tests              export-ignore
+/phpunit.xml.dist   export-ignore
+/public             export-ignore
+/config             export-ignore
+/templates          export-ignore
+/app                export-ignore
