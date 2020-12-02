@@ -30,5 +30,4 @@ services:
       - *app
       - ./docker/php/conf/ports.conf:/etc/apache2/ports.conf
       - ./docker/php/conf/sites-enabled:/etc/apache2/sites-enabled
-    depends_on:
-      - mysql
+
