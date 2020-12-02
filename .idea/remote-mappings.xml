@@ -6,8 +6,7 @@
         <remote-mappings server-id="php@8bafebd3-e1a4-412d-aec1-7488287a5aa0">
           <settings>
             <list>
-              <mapping local-root="$PROJECT_DIR$/src" remote-root="/app" />
-              <mapping local-root="$PROJECT_DIR$" remote-root="/" />
+              <mapping local-root="$PROJECT_DIR$" remote-root="/app" />
             </list>
           </settings>
         </remote-mappings>

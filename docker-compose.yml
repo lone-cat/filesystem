@@ -11,7 +11,7 @@ x-config:
     app:
       - &app
         type: bind
-        source: ./src
+        source: ./
         target: /app
 
 services:
