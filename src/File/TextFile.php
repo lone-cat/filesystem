@@ -2,7 +2,7 @@
 
 namespace LoneCat\Filesystem\File;
 
-use Exception;
+use LoneCat\Filesystem\Exception\FileException;
 use LoneCat\Filesystem\Stream\TextFileReadStream;
 
 class TextFile extends File
@@ -15,7 +15,7 @@ class TextFile extends File
 
     function openWriteStream(): void
     {
-        throw new Exception('Not implemented text file writing!');
+        throw new FileException('Not implemented text file writing!');
     }
 
 }

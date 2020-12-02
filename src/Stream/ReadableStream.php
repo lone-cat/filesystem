@@ -2,9 +2,14 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Iterator;
+use LoneCat\Filesystem\Exception\Stream\StreamNonExistentFileException;
 
-interface ReadableStream extends StreamInterface
+trait ReadableStream
 {
-    public function readAll(): Iterator;
+    protected function checkFile(string $filename): void
+    {
+        if (!file_exists($filename)) {
+            throw new StreamNonExistentFileException();
+        }
+    }
 }

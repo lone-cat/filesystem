@@ -2,7 +2,7 @@
 
 namespace LoneCat\Filesystem\File;
 
-use Exception;
+use LoneCat\Filesystem\Exception\FileException;
 use LoneCat\Filesystem\Stream\GzFileReadStream;
 
 class GzFile extends File
@@ -15,7 +15,7 @@ class GzFile extends File
 
     function openWriteStream(): void
     {
-        throw new Exception('Not implemented gz file writing!');
+        throw new FileException('Not implemented gz file writing!');
     }
 
 }

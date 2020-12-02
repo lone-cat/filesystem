@@ -2,11 +2,14 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Exception;
 use Iterator;
+use LoneCat\Filesystem\Exception\Stream\StreamNotReadyException;
+use LoneCat\Filesystem\Exception\Stream\StreamReadException;
 
-class TextFileReadStream extends PlainFileStream implements ReadableStream
+class TextFileReadStream extends PlainFileStream implements ReadableStreamInterface
 {
+
+    use ReadableStream;
 
     public function __construct(string $filename)
     {
@@ -16,7 +19,7 @@ class TextFileReadStream extends PlainFileStream implements ReadableStream
     public function readAll(): Iterator
     {
         if (!$this->isOpen()) {
-            throw new Exception('Stream is not open!');
+            throw new StreamNotReadyException();
         }
 
         while (!feof($this->resource)) {
@@ -28,7 +31,7 @@ class TextFileReadStream extends PlainFileStream implements ReadableStream
     {
         $readBuffer = fgets($this->resource);
         if (!$readBuffer) {
-            throw new Exception('Unable to read data!');
+            throw new StreamReadException();
         }
 
         return $readBuffer;

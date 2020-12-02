@@ -2,8 +2,9 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Exception;
 use Iterator;
+use LoneCat\Filesystem\Exception\Stream\StreamNotReadyException;
+use LoneCat\Filesystem\Exception\Stream\StreamReadException;
 
 class TsvFileReadStream extends TextFileReadStream
 {
@@ -11,7 +12,7 @@ class TsvFileReadStream extends TextFileReadStream
     public function readAllAsArray(): Iterator
     {
         if (!$this->isOpen()) {
-            throw new Exception('Stream is not open!');
+            throw new StreamNotReadyException();
         }
 
         while (!feof($this->resource)) {
@@ -23,7 +24,7 @@ class TsvFileReadStream extends TextFileReadStream
     {
         $readBuffer = fgetcsv($this->resource, 0, "\t");
         if (!$readBuffer) {
-            throw new Exception('Unable to read data!');
+            throw new StreamReadException();
         }
 
         return $readBuffer;

@@ -2,7 +2,7 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Exception;
+use LoneCat\Filesystem\Exception\Stream\StreamInvalidResource;
 
 abstract class Stream implements StreamInterface
 {
@@ -12,7 +12,7 @@ abstract class Stream implements StreamInterface
         $this->resource = $resource;
 
         if (!$this->isOpen()) {
-            throw new Exception('Invalid resource given!');
+            throw new StreamInvalidResource();
         }
     }
 

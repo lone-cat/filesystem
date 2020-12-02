@@ -2,11 +2,11 @@
 
 namespace LoneCat\Filesystem\File;
 
-use Exception;
 use Iterator;
-use LoneCat\Filesystem\Stream\ReadableStream;
+use LoneCat\Filesystem\Exception\FileException;
+use LoneCat\Filesystem\Stream\ReadableStreamInterface;
 use LoneCat\Filesystem\Stream\Stream;
-use LoneCat\Filesystem\Stream\WritableStream;
+use LoneCat\Filesystem\Stream\WritableStreamInterface;
 
 abstract class File
 {
@@ -49,10 +49,10 @@ abstract class File
     public function prepareToRead(): void
     {
         if ($this->stream instanceof Stream) {
-            if ($this->stream instanceof ReadableStream) {
+            if ($this->stream instanceof ReadableStreamInterface) {
                 return;
             } else {
-                throw new Exception('File is prepaired for another work!');
+                throw new FileException('File is prepaired for another work!');
             }
         }
 
@@ -64,10 +64,10 @@ abstract class File
     public function prepareToWrite(): void
     {
         if ($this->stream instanceof Stream) {
-            if ($this->stream instanceof WritableStream) {
+            if ($this->stream instanceof WritableStreamInterface) {
                 return;
             } else {
-                throw new Exception('File is prepaired for another work!');
+                throw new FileException('File is prepaired for another work!');
             }
         }
 

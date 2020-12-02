@@ -2,9 +2,21 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Iterator;
+use LoneCat\Filesystem\Exception\Stream\StreamExistentFileException;
+use LoneCat\Filesystem\Exception\Stream\StreamNonExistentPathException;
 
-interface WritableStream extends StreamInterface
+trait WritableStream
 {
-    public function writeAll(Iterator $dataIterator): void;
+
+    protected function checkFile(string $filename): void
+    {
+        if (file_exists($filename)) {
+            throw new StreamExistentFileException();
+        }
+
+        if (!is_dir(dirname($filename))) {
+            throw new StreamNonExistentPathException();
+        }
+    }
+
 }
