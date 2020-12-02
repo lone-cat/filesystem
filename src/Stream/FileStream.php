@@ -20,7 +20,7 @@ abstract class FileStream extends Stream
     public function __construct(string $filename, string $mode)
     {
         $this->checkFile($filename);
-        $this->filename = $filename;
+        $this->filename = 'file://' . $filename;
 
         $this->checkMode($mode);
         $this->mode = $mode;

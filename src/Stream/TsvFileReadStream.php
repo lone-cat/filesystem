@@ -9,7 +9,7 @@ use LoneCat\Filesystem\Exception\Stream\StreamReadException;
 class TsvFileReadStream extends TextFileReadStream
 {
 
-    public function readAllAsArray(): Iterator
+    public function readAllAsArray(): Iterable
     {
         if (!$this->isOpen()) {
             throw new StreamNotReadyException();
