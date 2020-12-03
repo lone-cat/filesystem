@@ -21,3 +21,6 @@
 
 # Composer
 /composer.lock       export-ignore
+
+# Other
+/src/public          export-ignore
