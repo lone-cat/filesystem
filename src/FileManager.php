@@ -63,7 +63,7 @@ class FileManager
             throw new Exception('Impossible to create temporary file');
         }
 
-        return $this->createBinaryFile($tmpFile);
+        return $this->getBinaryFile($tmpFile);
     }
 
     public function unpack(GzFile $gzFile, BinaryFile $binaryFile)
