@@ -45,20 +45,14 @@ class FileManager
     {
         $this->fileNonExistenceCheck($filename);
         $this->folderExistenceCheck(dirname($filename));
-        $file = new BinaryFile($filename);
-        $file->prepareToWrite();
-        $file->closeStream();
-        return $file;
+        return new BinaryFile($filename);
     }
 
     public function createTextFile(string $filename): TextFile
     {
         $this->fileNonExistenceCheck($filename);
         $this->folderExistenceCheck(dirname($filename));
-        $file = new TextFile($filename);
-        $file->prepareToWrite();
-        $file->closeStream();
-        return $file;
+        return new TextFile($filename);
     }
 
     public function createTemporaryFile(): File

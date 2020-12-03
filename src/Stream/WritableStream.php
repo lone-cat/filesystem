@@ -10,10 +10,6 @@ trait WritableStream
 
     protected function checkFile(string $filename): void
     {
-        if (file_exists($filename)) {
-            throw new StreamExistentFileException();
-        }
-
         if (!is_dir(dirname($filename))) {
             throw new StreamNonExistentPathException();
         }
