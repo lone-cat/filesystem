@@ -25,6 +25,11 @@ abstract class File
         return $this->filename;
     }
 
+    public function getStream(): ?Stream
+    {
+        return $this->stream;
+    }
+
     public function getFileContents(): string
     {
         return file_get_contents($this->filename);

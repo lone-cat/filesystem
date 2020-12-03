@@ -16,6 +16,11 @@ abstract class Stream implements StreamInterface
         }
     }
 
+    public function getResource()
+    {
+        return $this->resource;
+    }
+
     public function isOpen(): bool
     {
         return is_resource($this->resource);
