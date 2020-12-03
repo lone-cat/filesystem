@@ -30,6 +30,15 @@ abstract class File
         return $this->stream;
     }
 
+    public function isStreamOpen(): bool
+    {
+        if (!($this->stream instanceof Stream)) {
+            return false;
+        }
+
+        return $this->stream->isOpen();
+    }
+
     public function getFileContents(): string
     {
         return file_get_contents($this->filename);
