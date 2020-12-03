@@ -1,12 +1,23 @@
 # Keep package clean:
+
 # PHPStorm
 /.idea               export-ignore
+
 # Git
 /.gitattributes      export-ignore
 /.gitignore          export-ignore
+
+# Docker
 /docker/*            export-ignore
 /docker-compose.yml  export-ignore
+
+# Tests
 /tests               export-ignore
 /test                export-ignore
+
+# PHPUnit
 /phpunit.*           export-ignore
+/.phpunit.*          export-ignore
+
+# Composer
 /composer.lock       export-ignore
