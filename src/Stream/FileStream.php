@@ -25,7 +25,7 @@ abstract class FileStream extends Stream
         $this->checkMode($mode);
         $this->mode = $mode;
 
-        $resource = $this->getResource();
+        $resource = $this->generateResource();
         parent::__construct($resource);
     }
 
@@ -56,6 +56,6 @@ abstract class FileStream extends Stream
         throw new StreamOpenModeException();
     }
 
-    abstract protected function getResource();
+    abstract protected function generateResource();
 
 }

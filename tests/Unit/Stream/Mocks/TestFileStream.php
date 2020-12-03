@@ -7,7 +7,7 @@ use LoneCat\Filesystem\Stream\FileStream;
 class TestFileStream extends FileStream
 {
 
-    protected function getResource()
+    protected function generateResource()
     {
         return fopen($this->filename, $this->mode);
     }

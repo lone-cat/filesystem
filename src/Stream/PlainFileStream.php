@@ -5,7 +5,7 @@ namespace LoneCat\Filesystem\Stream;
 abstract class PlainFileStream extends FileStream
 {
 
-    protected function getResource()
+    protected function generateResource()
     {
         return fopen($this->filename, $this->mode);
     }

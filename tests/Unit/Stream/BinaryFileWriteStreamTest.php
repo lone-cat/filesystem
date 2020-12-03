@@ -31,19 +31,6 @@ class BinaryFileWriteStreamTest extends TestCase
         unlink($filename);
     }
 
-    public function testInvalidConstructorParameter()
-    {
-        $filename = $this->exampleFilesFolder . 'TextFile.txt';
-        try {
-            $stream = new BinaryFileWriteStream($filename);
-            $stream->close();
-            unlink($filename);
-            Assert::assertEquals(false, true);
-        } catch (StreamExistentFileException $e) {
-            Assert::assertEquals(true, true);
-        }
-    }
-
     public function testWriteAll()
     {
         $filename = $this->exampleFilesFolder . 'TestTextFile.txt';

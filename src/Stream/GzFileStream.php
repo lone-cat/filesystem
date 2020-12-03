@@ -5,7 +5,7 @@ namespace LoneCat\Filesystem\Stream;
 abstract class GzFileStream extends FileStream
 {
 
-    protected function getResource()
+    protected function generateResource()
     {
         return gzopen($this->filename, $this->mode);
     }
