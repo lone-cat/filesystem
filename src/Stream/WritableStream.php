@@ -2,7 +2,6 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use LoneCat\Filesystem\Exception\Stream\StreamExistentFileException;
 use LoneCat\Filesystem\Exception\Stream\StreamNonExistentPathException;
 
 trait WritableStream

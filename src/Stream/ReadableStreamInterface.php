@@ -2,9 +2,11 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Iterator;
+use Generator;
 
 interface ReadableStreamInterface extends StreamInterface
 {
-    public function readAll(): Iterator;
+    public function readAll(): Generator;
+
+    public function read();
 }

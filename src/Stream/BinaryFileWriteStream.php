@@ -15,18 +15,23 @@ class BinaryFileWriteStream extends PlainFileStream implements WritableStreamInt
         parent::__construct($filename, 'wb');
     }
 
-    public function writeAll(Iterable $dataIterator): void
+    public function writeAll(iterable $dataIterator): void
     {
         if (!$this->isOpen()) {
             throw new StreamNotReadyException();
         }
 
         foreach ($dataIterator as $dataBlock) {
-            $result = fwrite($this->resource, $dataBlock);
+            $this->write($dataBlock);
+        }
+    }
 
-            if (!$result) {
-                throw new StreamWriteException();
-            }
+    public function write(string $data): void
+    {
+        $result = fwrite($this->resource, $data);
+
+        if ($result === false) {
+            throw new StreamWriteException();
         }
     }
 }

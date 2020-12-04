@@ -2,6 +2,7 @@
 
 namespace LoneCat\Filesystem\File;
 
+use Generator;
 use Iterator;
 use LoneCat\Filesystem\Exception\FileException;
 use LoneCat\Filesystem\Stream\ReadableStreamInterface;
@@ -44,7 +45,7 @@ abstract class File
         return file_get_contents($this->filename);
     }
 
-    public function iterateFileData(): Iterator
+    public function readToEnd(): Generator
     {
         $this->prepareToRead();
         foreach ($this->stream->readAll() as $dataBlock) {
@@ -53,11 +54,23 @@ abstract class File
         $this->closeStream();
     }
 
-    public function writeFileDataFromIterator(Iterator $dataIterator): void
+    public function read(): string
+    {
+        $this->prepareToRead();
+        return $this->stream->read();
+    }
+
+    public function writeFileDataFromIterable(iterable $dataIterator): void
     {
         $this->prepareToWrite();
         $this->stream->writeAll($dataIterator);
         $this->closeStream();
+    }
+
+    public function write(string $data): void
+    {
+        $this->prepareToWrite();
+        $this->stream->write($data);
     }
 
     public function prepareToRead(): void

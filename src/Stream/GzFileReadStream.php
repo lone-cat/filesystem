@@ -2,6 +2,7 @@
 
 namespace LoneCat\Filesystem\Stream;
 
+use Generator;
 use Iterator;
 use LoneCat\Filesystem\Exception\Stream\StreamBufferSizeInvalidException;
 use LoneCat\Filesystem\Exception\Stream\StreamNotReadyException;
@@ -23,21 +24,21 @@ class GzFileReadStream extends GzFileStream implements ReadableStreamInterface
         parent::__construct($filename, 'rb');
     }
 
-    public function readAll(): Iterator
+    public function readAll(): Generator
     {
         if (!$this->isOpen()) {
             throw new StreamNotReadyException();
         }
 
         while (!gzeof($this->resource)) {
-            yield $this->readBlock();
+            yield $this->read();
         }
     }
 
-    protected function readBlock(): string
+    public function read(): string
     {
         $readBuffer = gzread($this->resource, $this->bufferLength);
-        if (!$readBuffer) {
+        if ($readBuffer === false) {
             throw new StreamReadException();
         }
 

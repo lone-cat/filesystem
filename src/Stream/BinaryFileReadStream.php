@@ -2,7 +2,7 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Iterator;
+use Generator;
 use LoneCat\Filesystem\Exception\Stream\StreamBufferSizeInvalidException;
 use LoneCat\Filesystem\Exception\Stream\StreamNotReadyException;
 use LoneCat\Filesystem\Exception\Stream\StreamReadException;
@@ -23,21 +23,21 @@ class BinaryFileReadStream extends PlainFileStream implements ReadableStreamInte
         parent::__construct($filename, 'rb');
     }
 
-    public function readAll(): Iterator
+    public function readAll(): Generator
     {
         if (!$this->isOpen()) {
             throw new StreamNotReadyException();
         }
 
         while (!feof($this->resource)) {
-            yield $this->readBlock();
+            yield $this->read();
         }
     }
 
-    protected function readBlock(): string
+    public function read(): string
     {
         $readBuffer = fread($this->resource, $this->bufferLength);
-        if (!$readBuffer) {
+        if ($readBuffer === false) {
             throw new StreamReadException();
         }
 

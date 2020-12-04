@@ -30,7 +30,7 @@ class BasicTest extends TestCase
         $filePath = $this->exampleFilesFolder . 'TextFile.txt';
         $textFile = new TextFile($filePath);
         $result = '';
-        foreach ($textFile->iterateFileData() as $line) {
+        foreach ($textFile->readToEnd() as $line) {
             $result .= $line;
         }
         Assert::assertEquals(file_get_contents($filePath), $result);
@@ -43,11 +43,11 @@ class BasicTest extends TestCase
         $file = new TextFile($filepath);
         $gzFile = new GzFile($gzFilepath);
         $contents = '';
-        foreach ($file->iterateFileData() as $line) {
+        foreach ($file->readToEnd() as $line) {
             $contents .= $line;
         }
         $unGzContents = '';
-        foreach ($gzFile->iterateFileData() as $dataBlock) {
+        foreach ($gzFile->readToEnd() as $dataBlock) {
             $unGzContents .= $dataBlock;
         }
         Assert::assertEquals($contents, $unGzContents);

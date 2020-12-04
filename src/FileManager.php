@@ -23,10 +23,10 @@ class FileManager
         return $this->tmpPath;
     }
 
-    public function getBinaryFile(string $filename): BinaryFile
+    public function getBinaryFile(string $filename, int $bufferLength = 4096): BinaryFile
     {
         $this->fileExistenceCheck($filename);
-        return new BinaryFile($filename);
+        return new BinaryFile($filename, $bufferLength);
     }
 
     public function getTextFile(string $filename): TextFile
@@ -35,17 +35,17 @@ class FileManager
         return new TextFile($filename);
     }
 
-    public function getGzArchiveFile(string $filename): GzFile
+    public function getGzArchiveFile(string $filename, int $bufferLength = 4096): GzFile
     {
         $this->fileExistenceCheck($filename);
-        return new GzFile($filename);
+        return new GzFile($filename, $bufferLength);
     }
 
-    public function createBinaryFile(string $filename): BinaryFile
+    public function createBinaryFile(string $filename, int $bufferLength = 4096): BinaryFile
     {
         $this->fileNonExistenceCheck($filename);
         $this->folderExistenceCheck(dirname($filename));
-        return new BinaryFile($filename);
+        return new BinaryFile($filename, $bufferLength);
     }
 
     public function createTextFile(string $filename): TextFile
@@ -68,7 +68,7 @@ class FileManager
 
     public function unpack(GzFile $gzFile, BinaryFile $binaryFile)
     {
-        $binaryFile->writeFileDataFromIterator($gzFile->iterateFileData());
+        $binaryFile->writeFileDataFromIterable($gzFile->readToEnd());
     }
 
     public function deleteFile(File $file)

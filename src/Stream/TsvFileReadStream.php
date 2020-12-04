@@ -2,28 +2,35 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Iterator;
+use Generator;
 use LoneCat\Filesystem\Exception\Stream\StreamNotReadyException;
 use LoneCat\Filesystem\Exception\Stream\StreamReadException;
 
-class TsvFileReadStream extends TextFileReadStream
+class TsvFileReadStream extends PlainFileStream implements ReadableStreamInterface
 {
 
-    public function readAllAsArray(): Iterable
+    use ReadableStream;
+
+    public function __construct(string $filename)
+    {
+        parent::__construct($filename, 'r');
+    }
+
+    public function readAll(): Generator
     {
         if (!$this->isOpen()) {
             throw new StreamNotReadyException();
         }
 
         while (!feof($this->resource)) {
-            yield $this->readLineAsArray();
+            yield $this->read();
         }
     }
 
-    protected function readLineAsArray(): array
+    public function read(): array
     {
         $readBuffer = fgetcsv($this->resource, 0, "\t");
-        if (!$readBuffer) {
+        if ($readBuffer === false) {
             throw new StreamReadException();
         }
 

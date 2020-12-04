@@ -2,9 +2,9 @@
 
 namespace LoneCat\Filesystem\Stream;
 
-use Iterator;
-
 interface WritableStreamInterface extends StreamInterface
 {
-    public function writeAll(Iterator $dataIterator): void;
+    public function writeAll(iterable $dataIterator): void;
+
+    public function write(string $data): void;
 }
