@@ -4,9 +4,11 @@ namespace LoneCat\Filesystem;
 
 use Exception;
 use LoneCat\Filesystem\File\BinaryFile;
+use LoneCat\Filesystem\File\CsvFile;
 use LoneCat\Filesystem\File\File;
 use LoneCat\Filesystem\File\GzFile;
 use LoneCat\Filesystem\File\TextFile;
+use LoneCat\Filesystem\File\TsvFile;
 
 class FileManager
 {
@@ -33,6 +35,18 @@ class FileManager
     {
         $this->fileExistenceCheck($filename);
         return new TextFile($filename);
+    }
+
+    public function getCsvFile(string $filename): CsvFile
+    {
+        $this->fileExistenceCheck($filename);
+        return new CsvFile($filename);
+    }
+
+    public function getTsvFile(string $filename): TsvFile
+    {
+        $this->fileExistenceCheck($filename);
+        return new TsvFile($filename);
     }
 
     public function getGzArchiveFile(string $filename, int $bufferLength = 4096): GzFile
