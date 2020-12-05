@@ -86,7 +86,7 @@ abstract class File
         $this->openReadStream();
     }
 
-    abstract function openReadStream(): void;
+    abstract public function openReadStream(): void;
 
     public function prepareToWrite(): void
     {
@@ -101,9 +101,9 @@ abstract class File
         $this->openWriteStream();
     }
 
-    abstract function openWriteStream(): void;
+    abstract public function openWriteStream(): void;
 
-    function closeStream(): void
+    public function closeStream(): void
     {
         if ($this->stream instanceof Stream) {
             $this->stream->close();

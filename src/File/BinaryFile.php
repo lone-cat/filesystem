@@ -16,12 +16,12 @@ class BinaryFile extends File
         $this->bufferLength = $bufferLength;
     }
 
-    function openReadStream(): void
+    public function openReadStream(): void
     {
         $this->stream = new BinaryFileReadStream($this->filename, $this->bufferLength);
     }
 
-    function openWriteStream(): void
+    public function openWriteStream(): void
     {
         $this->stream = new BinaryFileWriteStream($this->filename);
     }

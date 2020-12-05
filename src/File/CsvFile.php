@@ -12,24 +12,22 @@ class CsvFile extends File
 
     protected string $valueSeparator = ',';
 
-    private ?array $headers = null;
-
     public function getHeaders(): array
     {
-        return $this->headers;
+        $this->prepareToRead();
+        return $this->stream->getHeaders();
     }
 
-    function openReadStream(bool $containsHeaders = true): void
+    public function openReadStream(bool $containsHeaders = true): void
     {
-        $this->stream = new CsvFileReadStream($this->filename, $this->valueSeparator);
-        if ($containsHeaders) {
-            $this->headers = $this->stream->processLine($this->stream->read());
-        }
+        $this->stream = new CsvFileReadStream($this->filename, $this->valueSeparator, $containsHeaders);
     }
 
-    function openWriteStream(): void
+    public function openWriteStream(): void
     {
         throw new FileException('Not implemented text file writing!');
     }
+
+
 
 }

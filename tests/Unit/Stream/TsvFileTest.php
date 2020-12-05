@@ -21,7 +21,6 @@ class TsvFileTest extends TestCase
     {
         $filename = $this->exampleFilesFolder . 'File.tsv';
         $tsvFile = new TsvFile($filename);
-        $tsvFile->prepareToRead();
         $headers = [
           'header1',
           'header2',

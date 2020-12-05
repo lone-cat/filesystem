@@ -16,12 +16,12 @@ class GzFile extends File
         $this->bufferLength = $bufferLength;
     }
 
-    function openReadStream(): void
+    public function openReadStream(): void
     {
         $this->stream = new GzFileReadStream($this->filename, $this->bufferLength);
     }
 
-    function openWriteStream(): void
+    public function openWriteStream(): void
     {
         throw new FileException('Not implemented gz file writing!');
     }

@@ -21,7 +21,7 @@ class CsvFileReadStreamTest extends TestCase
     public function testValidConstructorParameter()
     {
         $filename = $this->exampleFilesFolder . 'File.csv';
-        $stream = new CsvFileReadStream($filename);
+        $stream = new CsvFileReadStream($filename, ',', false);
         Assert::assertEquals(true, $stream->isOpen());
         $stream->close();
     }
@@ -30,7 +30,7 @@ class CsvFileReadStreamTest extends TestCase
     {
         $filename = $this->exampleFilesFolder . 'NonExistentFile.csv';
         try {
-            $stream = new CsvFileReadStream($filename);
+            $stream = new CsvFileReadStream($filename, ',', false);
             Assert::assertEquals(false, true);
         } catch (StreamNonExistentFileException $e) {
             Assert::assertEquals(true, true);
@@ -40,7 +40,7 @@ class CsvFileReadStreamTest extends TestCase
     public function testReadAll()
     {
         $filename = $this->exampleFilesFolder . 'File.csv';
-        $stream = new CsvFileReadStream($filename);
+        $stream = new CsvFileReadStream($filename, ',', false);
         $result = [];
         foreach ($stream->readAll() as $line) {
             $result[] = $line;
@@ -57,7 +57,7 @@ class CsvFileReadStreamTest extends TestCase
     public function testClose()
     {
         $filename = $this->exampleFilesFolder . 'File.csv';
-        $stream = new CsvFileReadStream($filename);
+        $stream = new CsvFileReadStream($filename, ',', false);
         $stream->close();
         Assert::assertEquals(false, $stream->isOpen());
     }

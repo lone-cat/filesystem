@@ -8,12 +8,12 @@ use LoneCat\Filesystem\Stream\TextFileReadStream;
 class TextFile extends File
 {
 
-    function openReadStream(): void
+    public function openReadStream(): void
     {
         $this->stream = new TextFileReadStream($this->filename);
     }
 
-    function openWriteStream(): void
+    public function openWriteStream(): void
     {
         throw new FileException('Not implemented text file writing!');
     }
