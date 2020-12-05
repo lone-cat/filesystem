@@ -8,7 +8,7 @@ use LoneCat\Filesystem\Stream\TextFileReadStream;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-class CsvFileReadStreamTest extends TestCase
+class TsvFileReadStreamTest extends TestCase
 {
     private $exampleFilesFolder;
 
@@ -20,17 +20,17 @@ class CsvFileReadStreamTest extends TestCase
 
     public function testValidConstructorParameter()
     {
-        $filename = $this->exampleFilesFolder . 'File.csv';
-        $stream = new CsvFileReadStream($filename);
+        $filename = $this->exampleFilesFolder . 'File.tsv';
+        $stream = new CsvFileReadStream($filename, "\t");
         Assert::assertEquals(true, $stream->isOpen());
         $stream->close();
     }
 
     public function testInvalidConstructorParameter()
     {
-        $filename = $this->exampleFilesFolder . 'NonExistentFile.csv';
+        $filename = $this->exampleFilesFolder . 'NonExistentFile.tsv';
         try {
-            $stream = new CsvFileReadStream($filename);
+            $stream = new CsvFileReadStream($filename, "\t");
             Assert::assertEquals(false, true);
         } catch (StreamNonExistentFileException $e) {
             Assert::assertEquals(true, true);
@@ -39,8 +39,8 @@ class CsvFileReadStreamTest extends TestCase
 
     public function testReadAll()
     {
-        $filename = $this->exampleFilesFolder . 'File.csv';
-        $stream = new CsvFileReadStream($filename);
+        $filename = $this->exampleFilesFolder . 'File.tsv';
+        $stream = new CsvFileReadStream($filename, "\t");
         $result = [];
         foreach ($stream->readAll() as $line) {
             $result[] = $line;
@@ -48,7 +48,7 @@ class CsvFileReadStreamTest extends TestCase
 
         $expectedResult = [
             ['header1', 'header2', 'header3', 'header4',],
-            ['value1', 'value,1', 'value" , 1', '\N',],
+            ['value1', 'value' . "\t" . '1', 'value" ' . "\t" . ' 1', '\N',],
         ];
         Assert::assertEquals($expectedResult, $result);
         $stream->close();
@@ -56,8 +56,8 @@ class CsvFileReadStreamTest extends TestCase
 
     public function testClose()
     {
-        $filename = $this->exampleFilesFolder . 'File.csv';
-        $stream = new CsvFileReadStream($filename);
+        $filename = $this->exampleFilesFolder . 'File.tsv';
+        $stream = new CsvFileReadStream($filename, "\t");
         $stream->close();
         Assert::assertEquals(false, $stream->isOpen());
     }
