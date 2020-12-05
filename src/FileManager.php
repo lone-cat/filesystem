@@ -8,7 +8,6 @@ use LoneCat\Filesystem\File\CsvFile;
 use LoneCat\Filesystem\File\File;
 use LoneCat\Filesystem\File\GzFile;
 use LoneCat\Filesystem\File\TextFile;
-use LoneCat\Filesystem\File\TsvFile;
 
 class FileManager
 {

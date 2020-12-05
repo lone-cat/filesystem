@@ -3,7 +3,6 @@
 namespace LoneCat\Filesystem\Tests\Unit\Stream;
 
 use LoneCat\Filesystem\File\CsvFile;
-use LoneCat\Filesystem\File\TsvFile;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
