@@ -46,13 +46,13 @@ class FileManager
     public function getTsvFile(string $filename): CsvFile
     {
         $this->fileExistenceCheck($filename);
-        return new CsvFile($filename, "\t", '');
+        return new CsvFile($filename, "\t");
     }
 
     public function getImdbFile(string $filename): ImdbFile
     {
         $this->fileExistenceCheck($filename);
-        return new ImdbFile($filename, "\t", '');
+        return new ImdbFile($filename);
     }
 
     public function getGzArchiveFile(string $filename, int $bufferLength = 4096): GzFile
