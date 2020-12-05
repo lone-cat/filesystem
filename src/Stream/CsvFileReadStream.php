@@ -12,11 +12,22 @@ class CsvFileReadStream extends TextFileReadStream
     private ?array $headers = null;
 
     private string $valueSeparator;
+    private string $enclosureString;
+    private string $escapeString;
+    private bool $containHeaders;
 
-    public function __construct(string $filename, string $valueSeparator = ',', bool $containHeaders = true)
+    public function __construct(string $filename,
+        string $valueSeparator = ',',
+        string $enclosureString = '"',
+        string $escapeString = '\\',
+        bool $containHeaders = true)
     {
         parent::__construct($filename);
         $this->valueSeparator = $valueSeparator;
+        $this->enclosureString = $enclosureString;
+        $this->escapeString = $escapeString;
+        $this->containHeaders = $containHeaders;
+
         if ($containHeaders) {
             $this->fillHeaders();
         }
@@ -38,7 +49,7 @@ class CsvFileReadStream extends TextFileReadStream
 
     public function processLine(string $line)
     {
-        return str_getcsv($line, $this->valueSeparator);
+        return str_getcsv($line, $this->valueSeparator, $this->enclosureString, $this->escapeString);
     }
 
     public function read(): string

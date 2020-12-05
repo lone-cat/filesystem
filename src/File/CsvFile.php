@@ -10,7 +10,23 @@ use LoneCat\Filesystem\Stream\CsvFileReadStream;
 class CsvFile extends File
 {
 
-    protected string $valueSeparator = ',';
+    protected string $valueSeparator;
+    protected string $enclosureString;
+    protected bool $containHeaders;
+    private string $escapeString;
+
+    public function __construct(string $filename,
+        string $valueSeparator = ',',
+        string $enclosureString = '"',
+        string $escapeString = '\\',
+        bool $containHeaders = true)
+    {
+        parent::__construct($filename);
+        $this->valueSeparator = $valueSeparator;
+        $this->enclosureString = $enclosureString;
+        $this->escapeString = $escapeString;
+        $this->containHeaders = $containHeaders;
+    }
 
     public function getHeaders(): array
     {
@@ -18,9 +34,9 @@ class CsvFile extends File
         return $this->stream->getHeaders();
     }
 
-    public function openReadStream(bool $containsHeaders = true): void
+    public function openReadStream(): void
     {
-        $this->stream = new CsvFileReadStream($this->filename, $this->valueSeparator, $containsHeaders);
+        $this->stream = new CsvFileReadStream($this->filename, $this->valueSeparator, $this->enclosureString, $this->escapeString, $this->containHeaders);
     }
 
     public function openWriteStream(): void

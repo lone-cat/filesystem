@@ -2,6 +2,7 @@
 
 namespace LoneCat\Filesystem\Tests\Unit\Stream;
 
+use LoneCat\Filesystem\File\CsvFile;
 use LoneCat\Filesystem\File\TsvFile;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +21,7 @@ class TsvFileTest extends TestCase
     public function testSimple()
     {
         $filename = $this->exampleFilesFolder . 'File.tsv';
-        $tsvFile = new TsvFile($filename);
+        $tsvFile = new CsvFile($filename, "\t", '', '\\');
         $headers = [
           'header1',
           'header2',

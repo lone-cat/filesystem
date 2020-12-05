@@ -43,10 +43,10 @@ class FileManager
         return new CsvFile($filename);
     }
 
-    public function getTsvFile(string $filename): TsvFile
+    public function getTsvFile(string $filename): CsvFile
     {
         $this->fileExistenceCheck($filename);
-        return new TsvFile($filename);
+        return new CsvFile($filename, "\t", '');
     }
 
     public function getGzArchiveFile(string $filename, int $bufferLength = 4096): GzFile
