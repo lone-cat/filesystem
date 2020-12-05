@@ -47,8 +47,28 @@ class TsvFileReadStreamTest extends TestCase
         }
 
         $expectedResult = [
-            ['header1', 'header2', 'header3', 'header4',],
-            ['value1', 'value' . "\t" . '1', 'value" ' . "\t" . ' 1', '\N',],
+            [
+                'header1',
+                'header2',
+                'header3',
+                'header4',
+                'header5',
+                'header6',
+                'header7',
+                'header8',
+                'header9'
+            ],
+            [
+                'value1',
+                'value' . "\t" . '1',
+                'value" ' . "\t" . ' 1',
+                '\N',
+                'value" ' . "\t" . ' 1',
+                '\N',
+                'value" ' . "\t" . ' 1',
+                '\N',
+                '\N',
+            ],
         ];
         Assert::assertEquals($expectedResult, $result);
         $stream->close();

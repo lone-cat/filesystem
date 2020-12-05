@@ -1,6 +1,6 @@
 <?php
 
-namespace LoneCat\Filesystem\Tests\Unit\Stream;
+namespace LoneCat\Filesystem\Tests\Unit\File;
 
 use LoneCat\Filesystem\File\CsvFile;
 use PHPUnit\Framework\Assert;
@@ -17,15 +17,20 @@ class TsvFileTest extends TestCase
         $this->exampleFilesFolder = realpath(dirname(dirname(__DIR__))) . '/ExampleFiles/';
     }
 
-    public function testSimple()
+    public function testHeaders()
     {
         $filename = $this->exampleFilesFolder . 'File.tsv';
-        $tsvFile = new CsvFile($filename, "\t", '', '\\');
+        $tsvFile = new CsvFile($filename, "\t", '"', '\\');
         $headers = [
           'header1',
           'header2',
           'header3',
           'header4',
+          'header5',
+          'header6',
+          'header7',
+          'header8',
+          'header9',
         ];
         Assert::assertEquals($headers, $tsvFile->getHeaders());
     }

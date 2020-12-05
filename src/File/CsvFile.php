@@ -1,19 +1,15 @@
 <?php
 
-
 namespace LoneCat\Filesystem\File;
-
 
 use LoneCat\Filesystem\Exception\FileException;
 use LoneCat\Filesystem\Stream\CsvFileReadStream;
 
-class CsvFile extends File
+class CsvFile extends DataTableTextFile
 {
 
-    protected string $valueSeparator;
     protected string $enclosureString;
-    protected bool $containHeaders;
-    private string $escapeString;
+    protected string $escapeString;
 
     public function __construct(string $filename,
         string $valueSeparator = ',',
@@ -21,17 +17,9 @@ class CsvFile extends File
         string $escapeString = '\\',
         bool $containHeaders = true)
     {
-        parent::__construct($filename);
-        $this->valueSeparator = $valueSeparator;
         $this->enclosureString = $enclosureString;
         $this->escapeString = $escapeString;
-        $this->containHeaders = $containHeaders;
-    }
-
-    public function getHeaders(): array
-    {
-        $this->prepareToRead();
-        return $this->stream->getHeaders();
+        parent::__construct($filename, $valueSeparator, $containHeaders);
     }
 
     public function openReadStream(): void

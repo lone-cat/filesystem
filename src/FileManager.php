@@ -7,6 +7,7 @@ use LoneCat\Filesystem\File\BinaryFile;
 use LoneCat\Filesystem\File\CsvFile;
 use LoneCat\Filesystem\File\File;
 use LoneCat\Filesystem\File\GzFile;
+use LoneCat\Filesystem\File\ImdbFile;
 use LoneCat\Filesystem\File\TextFile;
 
 class FileManager
@@ -46,6 +47,12 @@ class FileManager
     {
         $this->fileExistenceCheck($filename);
         return new CsvFile($filename, "\t", '');
+    }
+
+    public function getImdbFile(string $filename): ImdbFile
+    {
+        $this->fileExistenceCheck($filename);
+        return new ImdbFile($filename, "\t", '');
     }
 
     public function getGzArchiveFile(string $filename, int $bufferLength = 4096): GzFile
