@@ -7,13 +7,12 @@ use LoneCat\Filesystem\File\BinaryFile;
 use LoneCat\Filesystem\File\CsvFile;
 use LoneCat\Filesystem\File\File;
 use LoneCat\Filesystem\File\GzFile;
-use LoneCat\Filesystem\File\ImdbFile;
 use LoneCat\Filesystem\File\TextFile;
 
 class FileManager
 {
 
-    private string $tmpPath;
+    protected string $tmpPath;
 
     public function __construct(string $tmpPath)
     {
@@ -47,12 +46,6 @@ class FileManager
     {
         $this->fileExistenceCheck($filename);
         return new CsvFile($filename, "\t");
-    }
-
-    public function getImdbFile(string $filename): ImdbFile
-    {
-        $this->fileExistenceCheck($filename);
-        return new ImdbFile($filename);
     }
 
     public function getGzArchiveFile(string $filename, int $bufferLength = 4096): GzFile
@@ -101,21 +94,21 @@ class FileManager
     }
 
 
-    private function fileExistenceCheck(string $filename): void
+    protected function fileExistenceCheck(string $filename): void
     {
         if (!file_exists($filename)) {
             throw new Exception('Non existent file!');
         }
     }
 
-    private function fileNonExistenceCheck(string $filename): void
+    protected function fileNonExistenceCheck(string $filename): void
     {
         if (file_exists($filename)) {
             throw new Exception('Existent file!');
         }
     }
 
-    private function folderExistenceCheck(string $folder): void
+    protected function folderExistenceCheck(string $folder): void
     {
         if (!is_dir($folder)) {
             throw new Exception('Folder doesnt exist!');
