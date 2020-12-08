@@ -79,6 +79,17 @@ class FileManager
         return $this->getBinaryFile($tmpFile);
     }
 
+    public function createTemporaryTextFile(): File
+    {
+        $tmpFile = tempnam($this->tmpPath, 'tmp-file-');
+
+        if (!$tmpFile) {
+            throw new Exception('Impossible to create temporary file');
+        }
+
+        return $this->getTextFile($tmpFile);
+    }
+
     public function unpack(GzFile $gzFile, BinaryFile $binaryFile)
     {
         $binaryFile->writeFileDataFromIterable($gzFile->readToEnd());
