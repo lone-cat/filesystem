@@ -6,7 +6,7 @@ use LoneCat\Filesystem\File\CsvFile;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-class TsvFileTest extends TestCase
+class TsvFileTest //extends TestCase
 {
 
     private $exampleFilesFolder;

@@ -2,50 +2,31 @@
 
 namespace LoneCat\Filesystem\Tests\Unit\Stream;
 
-use LoneCat\Filesystem\Exception\Stream\StreamInvalidResource;
-use LoneCat\Filesystem\Tests\Unit\Stream\Mocks\TestStream;
+use LoneCat\Filesystem\Stream\Stream;
+use LoneCat\Filesystem\Tests\Unit\Stream\Mocks\StreamMock;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class StreamTest extends TestCase
 {
 
-    public function testValidConstructorParameter()
+    use StreamTestTrait;
+
+    public function testConstruct(): Stream
     {
         $resource = fopen('php://memory', 'r+');
-        $stream = new TestStream($resource);
-        Assert::assertEquals(true, $stream->isOpen());
-        fclose($resource);
+        $stream = new StreamMock($resource);
+        Assert::assertEquals(true, $stream instanceof Stream);
+        return $stream;
     }
 
-    public function testInvalidConstructorParameter()
+    public function testConstructAndClose(): Stream
     {
         $resource = fopen('php://memory', 'r+');
-        fclose($resource);
-        try {
-            $stream = new TestStream($resource);
-            Assert::assertEquals(false, true);
-        } catch (StreamInvalidResource $e) {
-            Assert::assertEquals(true, true);
-        }
-
-    }
-
-    public function testIsOpenWhenOpen()
-    {
-        $resource = fopen('php://memory', 'r+');
-        $stream = new TestStream($resource);
-        Assert::assertEquals(true, $stream->isOpen());
-        fclose($resource);
-    }
-
-    public function testIsOpenWhenClosed()
-    {
-        $resource = fopen('php://memory', 'r+');
-        $stream = new TestStream($resource);
-        fclose($resource);
-        Assert::assertEquals(false, $stream->isOpen());
+        $stream = new StreamMock($resource);
+        $stream->close();
+        Assert::assertEquals(true, $stream instanceof Stream);
+        return $stream;
     }
 
 }
-

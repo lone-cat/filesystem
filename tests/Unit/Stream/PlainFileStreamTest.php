@@ -2,47 +2,52 @@
 
 namespace LoneCat\Filesystem\Tests\Unit\Stream;
 
-use LoneCat\Filesystem\Exception\Stream\StreamNonExistentFileException;
 use LoneCat\Filesystem\Exception\Stream\StreamOpenModeException;
-use LoneCat\Filesystem\Tests\Unit\Stream\Mocks\TestPlainFileStream;
+use LoneCat\Filesystem\Stream\Stream;
+use LoneCat\Filesystem\Tests\Unit\Stream\Mocks\FileStreamMock;
+use LoneCat\Filesystem\Tests\Unit\Stream\Mocks\PlainFileStreamMock;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class PlainFileStreamTest extends TestCase
 {
+    use PlainFileStreamTestTrait;
 
-    private $exampleFilesFolder;
+    private string $filename;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->exampleFilesFolder = realpath(dirname(dirname(__DIR__))) . '/ExampleFiles/';
+        $exampleFilesFolder = realpath(dirname(dirname(__DIR__))) . '/ExampleFiles/';
+        $this->filename = $exampleFilesFolder . 'TextFile.txt';
     }
 
-    public function testValidConstructorParameter()
+    public function testConstruct(): Stream
     {
-        $filename = $this->exampleFilesFolder . 'TextFile.txt';
-        $stream = new TestPlainFileStream($filename, 'r');
-        Assert::assertEquals(true, $stream->isOpen());
+        $stream = new PlainFileStreamMock($this->filename, 'rt');
+        Assert::assertEquals(true, $stream instanceof Stream);
+        return $stream;
     }
 
-    public function testInvalidConstructorParameterMode()
+    public function testConstructAndClose(): Stream
     {
-        $filename = $this->exampleFilesFolder . 'TextFile.txt';
+        $stream = new PlainFileStreamMock($this->filename, 'rt');
+        $stream->close();
+        Assert::assertEquals(true, $stream instanceof Stream);
+        return $stream;
+    }
+
+    public function testInvalidConstructByMode()
+    {
         try {
-            $stream = new TestPlainFileStream($filename, 'sdfsdf');
-            Assert::assertEquals(false, true);
+            $stream = new PlainFileStreamMock($this->filename, 'wtf???');
         } catch (StreamOpenModeException $e) {
             Assert::assertEquals(true, true);
+            return;
+        } catch (\Throwable $e) {
+            Assert::assertEquals(false, true);
         }
-    }
-
-    public function testClose()
-    {
-        $filename = $this->exampleFilesFolder . 'TextFile.txt';
-        $stream = new TestPlainFileStream($filename, 'r');
-        $stream->close();
-        Assert::assertEquals(false, $stream->isOpen());
+        Assert::assertEquals(false, true);
     }
 
 }

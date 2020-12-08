@@ -2,15 +2,17 @@
 
 namespace LoneCat\Filesystem\Tests\Unit\Stream;
 
-use LoneCat\Filesystem\Exception\Stream\StreamOpenModeException;
+use LoneCat\Filesystem\Exception\Stream\StreamNonExistentPathException;
+use LoneCat\Filesystem\Stream\BinaryFileWriteStream;
 use LoneCat\Filesystem\Stream\Stream;
-use LoneCat\Filesystem\Tests\Unit\Stream\Mocks\GzFileStreamMock;
+use LoneCat\Filesystem\Stream\TextFileReadStream;
+use LoneCat\Filesystem\Stream\TextFileWriteStream;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-class GzFileStreamTest extends TestCase
+class TextFileWriteStreamTest extends TestCase
 {
-    use GzFileStreamTestTrait;
+    use TextFileWriteStreamTestTrait;
 
     private string $filename;
 
@@ -18,29 +20,29 @@ class GzFileStreamTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
         $exampleFilesFolder = realpath(dirname(dirname(__DIR__))) . '/ExampleFiles/';
-        $this->filename = $exampleFilesFolder . 'TextFile.txt';
+        $this->filename = $exampleFilesFolder . 'TestTextFile.txt';
     }
 
     public function testConstruct(): Stream
     {
-        $stream = new GzFileStreamMock($this->filename, 'rt');
+        $stream = new TextFileWriteStream($this->filename);
         Assert::assertEquals(true, $stream instanceof Stream);
         return $stream;
     }
 
     public function testConstructAndClose(): Stream
     {
-        $stream = new GzFileStreamMock($this->filename, 'rt');
+        $stream = new TextFileWriteStream($this->filename);
         $stream->close();
         Assert::assertEquals(true, $stream instanceof Stream);
         return $stream;
     }
 
-    public function testInvalidConstructByMode()
+    public function testInvalidConstructByFileName()
     {
         try {
-            $stream = new GzFileStreamMock($this->filename, 'wtf???');
-        } catch (StreamOpenModeException $e) {
+            $stream = new TextFileWriteStream('/wtf???/a');
+        } catch (StreamNonExistentPathException $e) {
             Assert::assertEquals(true, true);
             return;
         } catch (\Throwable $e) {

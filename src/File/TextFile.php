@@ -2,8 +2,8 @@
 
 namespace LoneCat\Filesystem\File;
 
-use LoneCat\Filesystem\Exception\FileException;
 use LoneCat\Filesystem\Stream\TextFileReadStream;
+use LoneCat\Filesystem\Stream\TextFileWriteStream;
 
 class TextFile extends File
 {
@@ -15,7 +15,8 @@ class TextFile extends File
 
     public function openWriteStream(): void
     {
-        throw new FileException('Not implemented text file writing!');
+        $this->stream = new TextFileWriteStream($this->filename);
+        //throw new FileException('Not implemented text file writing!');
     }
 
 }

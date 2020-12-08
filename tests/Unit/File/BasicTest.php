@@ -7,7 +7,7 @@ use LoneCat\Filesystem\File\TextFile;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-class BasicTest extends TestCase
+class BasicTest //extends TestCase
 {
 
     private $exampleFilesFolder;

@@ -13,7 +13,7 @@ class TextFileReadStream extends PlainFileStream implements ReadableStreamInterf
 
     public function __construct(string $filename)
     {
-        parent::__construct($filename, 'r');
+        parent::__construct($filename, 'rt');
     }
 
     public function readAll(): Generator

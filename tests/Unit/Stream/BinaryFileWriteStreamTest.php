@@ -2,53 +2,53 @@
 
 namespace LoneCat\Filesystem\Tests\Unit\Stream;
 
-use LoneCat\Filesystem\Exception\Stream\StreamExistentFileException;
-use LoneCat\Filesystem\Exception\Stream\StreamNonExistentFileException;
+use LoneCat\Filesystem\Exception\Stream\StreamNonExistentPathException;
+use LoneCat\Filesystem\Exception\Stream\StreamOpenModeException;
 use LoneCat\Filesystem\Stream\BinaryFileWriteStream;
+use LoneCat\Filesystem\Stream\Stream;
+use LoneCat\Filesystem\Tests\Unit\Stream\Mocks\PlainFileStreamMock;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class BinaryFileWriteStreamTest extends TestCase
 {
-    private $exampleFilesFolder;
+    use BinaryWriteStreamTestTrait;
+
+    private string $filename;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->exampleFilesFolder = realpath(dirname(dirname(__DIR__))) . '/ExampleFiles/';
-        $filename = $this->exampleFilesFolder . 'TestTextFile.txt';
-        if (file_exists($filename)) {
-            unlink($filename);
+        $exampleFilesFolder = realpath(dirname(dirname(__DIR__))) . '/ExampleFiles/';
+        $this->filename = $exampleFilesFolder . 'TestTextFile.txt';
+    }
+
+    public function testConstruct(): Stream
+    {
+        $stream = new BinaryFileWriteStream($this->filename);
+        Assert::assertEquals(true, $stream instanceof Stream);
+        return $stream;
+    }
+
+    public function testConstructAndClose(): Stream
+    {
+        $stream = new BinaryFileWriteStream($this->filename);
+        $stream->close();
+        Assert::assertEquals(true, $stream instanceof Stream);
+        return $stream;
+    }
+
+    public function testInvalidConstructByFileName()
+    {
+        try {
+            $stream = new BinaryFileWriteStream('/wtf???/a');
+        } catch (StreamNonExistentPathException $e) {
+            Assert::assertEquals(true, true);
+            return;
+        } catch (\Throwable $e) {
+            Assert::assertEquals(false, true);
         }
-    }
-
-    public function testValidConstructorParameter()
-    {
-        $filename = $this->exampleFilesFolder . 'TestTextFile.txt';
-        $stream = new BinaryFileWriteStream($filename);
-        Assert::assertEquals(true, $stream->isOpen());
-        $stream->close();
-        unlink($filename);
-    }
-
-    public function testWriteAll()
-    {
-        $filename = $this->exampleFilesFolder . 'TestTextFile.txt';
-        $stream = new BinaryFileWriteStream($filename);
-        $source = ['My text!' . "\n", 'And one more line.'];
-        $stream->writeAll($source);
-        Assert::assertEquals(file_get_contents($filename), implode('', $source));
-        $stream->close();
-        unlink($filename);
-    }
-
-    public function testClose()
-    {
-        $filename = $this->exampleFilesFolder . 'TestTextFile.txt';
-        $stream = new BinaryFileWriteStream($filename);
-        $stream->close();
-        unlink($filename);
-        Assert::assertEquals(false, $stream->isOpen());
+        Assert::assertEquals(false, true);
     }
 
 }
